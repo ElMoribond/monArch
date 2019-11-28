@@ -43,12 +43,13 @@ CheckEx $? mnt3
 
 mkdir -p /mnt/var/lib/pacman /mnt/var/cache/pacman/pkg /mnt/var/log /mnt/etc/pacman.d/gnupg
 CheckEx $? mkdir
-pacparam=-r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm
-pacman $pacparam archlinux-keyring
+pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
+  archlinux-keyring
 CheckEx $? pacman1
-pacman $pacparam base base-devel linux linux-firmware intel-ucode openssh \
-  dnsmasq usbutils bash-completion mc p7zip unzip net-tools archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib \
-  hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools ntfs-3g exfat-utils mosquitto wget htop docker
+pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
+  base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools \
+  archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
+  ntfs-3g exfat-utils mosquitto wget htop docker
 CheckEx $? pacman2
 
 if [[ $? -ne 0 ]]; then
