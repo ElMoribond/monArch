@@ -1,21 +1,24 @@
 #!/bin/bash
 # https://tinyurl.com/MonPacstrap01
 
+ok=1
 if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
   echo "Il faut monter les FS !"
-  exit 1
+  ok=0
 fi
-
 if [[ -z ${SSID_PASSWORD+x} ]]; then
   echo "Variable SSID_PASSWORD indéfinie !"
-  exit 1
+  ok=0
 fi
 if [[ -z ${MON_HOSTN+x} ]]; then
   echo "Variable MON_HOSTN indéfinie !"
-  exit 1
+  ok=0
 fi
 if [[ -z ${MON_USER+x} ]]; then
   echo "Variable MON_USER indéfinie !"
+  ok=0
+fi
+if [[ $ok -ne 1 ]]; then
   exit 1
 fi
 
