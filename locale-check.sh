@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-#
-# Script trouvé sur https://wiki.archlinux.fr/locale
+
+echo
+echo
+echo "Script trouvé sur https://wiki.archlinux.fr/locale"
 
 warn() { printf "\e[31mwarning:\e[m %s\n" "$*"; ((++n_warnings)); } >&2
 
