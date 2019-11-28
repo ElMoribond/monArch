@@ -16,8 +16,8 @@ if [[ -z ${MON_HOSTN+x} ]]; then
 fi
 
 pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
-  net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools lsb-
-release ntfs-3g exfat-utils pacman-contrib mosquitto
+  net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools \
+  dosfstools lsb-release ntfs-3g exfat-utils pacman-contrib mosquitto
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat <<EOT >> /mnt/etc/fstab
