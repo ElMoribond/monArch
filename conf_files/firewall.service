@@ -1,0 +1,15 @@
+[Unit]
+Description=Pare-feu Netfilter
+#Wants=sys-subsystem-net-devices-WAN.device sys-subsystem-net-devices-LAN.device
+#After=network.target sys-subsystem-net-devices-WAN.device sys-subsystem-net-devices-LAN.device
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/srv/scripts/firewall start
+ExecStop=/srv/scripts/firewall stop
+RemainAfterExit=yes
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
