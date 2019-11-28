@@ -6,13 +6,18 @@ if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
   exit 1
 fi
 
-if [[ -z ${SSID_PASSWORD+x} || -z ${MON_HOSTN+x} ]]; then
+if [[ -z ${SSID_PASSWORD+x} ]]; then
+  echo "Variable SSID_PASSWORD indéfinie !"
+  exit 1
+fi
+if [[ -z ${MON_HOSTN+x} ]]; then
   echo "Variable MON_HOSTN indéfinie !"
   exit 1
 fi
 
 pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
-  net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd 
+  net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools lsb-
+release ntfs-3g exfat-utils pacman-contrib mosquitto
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat <<EOT >> /mnt/etc/fstab
@@ -27,15 +32,6 @@ cat <<EOT >> /mnt/etc/vconsole.conf
 KEYMAP=fr-latin9
 FONT=eurlatgr
 EOT
-
-# Langue
-cat <<EOT >> /etc/locale.conf
-LANG=fr_FR.UTF-8
-LC_COLLATE=C
-EOT
-sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /mnt/etc/locale.gen
-sed -i "s/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g" /mnt/etc/locale.gen
-locale-gen
 
 cat <<EOT >> /mnt/etc/bash.bashrc
 alias_My_NETSTAT() {
@@ -126,4 +122,5 @@ export LANG=fr_FR.UTF-8
 
 echo "---------------------------- Prochaines étapes"
 echo "arch-chroot /mnt"
+echo "export MON_USER=nom_user"
 echo "wget -O - https://tinyurl.com/MonPostinstall01 | bash"
