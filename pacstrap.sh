@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://tinyurl.com/MonPacstrap01
 
-if ! [[ -d /mnt/boot/efi && -d /mnt/home ]]; then
+if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
   echo "Il faut monter les FS !"
   exit 1
 fi
