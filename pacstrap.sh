@@ -22,8 +22,18 @@ if [[ $ok -ne 1 ]]; then
   exit 1
 fi
 
+umount -R /mnt
+mkfs.ext4 -F /dev/nvme0n1p2
+mount /dev/nvme0n1p2 /mnt
+mkdir -p /mnt/boot/efi /mnt/home
+mount /dev/nvme0n1p1 /mnt/boot/efi
+mount /dev/nvme0n1p5 /mnt/home
+
 mkdir -p /mnt/var/lib/pacman /mnt/var/cache/pacman/pkg /mnt/var/log /mnt/etc/pacman.d/gnupg
-pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker
+pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log \
+  --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm base base-devel linux linux-firmware intel-ucode openssh \
+  dnsmasq usbutils bash-completion mc p7zip unzip net-tools archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib \
+  hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools ntfs-3g exfat-utils mosquitto wget htop docker
 
 #pacstrap /mnt \
 #  base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
