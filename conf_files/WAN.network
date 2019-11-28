@@ -1,0 +1,11 @@
+[Match]
+Name=WAN
+
+[Network]
+DHCP=no
+Domain=wan.loiseliere.lan
+Address=192.168.1.2/24
+
+Gateway=192.168.1.1
+DNS=127.0.0.1
+IPv6AcceptRA=no
