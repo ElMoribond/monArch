@@ -1,15 +1,5 @@
 #!/bin/bash
 
-systemctl enable dnsmasq sshd
-
-if [[ -r /srv/vnstat/vnstat.db ]]; then
-  systemctl enable vnstat
-else
-  echo
-  echo "--------------->>>>>  Penser à copier les données vnstat"
-  echo
-fi
-
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
 echo "---------------------------- Configuration de grub"
@@ -29,14 +19,7 @@ locale-gen
 
 sed -i "s/DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g" /etc/systemd/system.conf 
 
-echo "---------------------------- Création utilisateur"
-useradd -m ${MON_USER}
-usermod -aG users,video,audio ${MON_USER}
-cat <<EOT >> /etc/sudoers
-${MON_USER} ALL=(ALL) NOPASSWD: ALL
-EOT
-
-rm -f /root/.bash.bashrc /home/${MON_USER}/.bash.bashrc
+rm -f /root/.bash.bashrc
 
 echo "---------------------------- Vérification langue"
 wget -O - https://raw.githubusercontent.com/ElMoribond/monArch/master/locale-check.sh | bash
