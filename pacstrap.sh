@@ -80,7 +80,6 @@ fi
 # Ecran d'accueil archey4
 /usr/bin/archey3
 EOT
-rm /mnt/root/.bash.bashrc
 
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -o /mnt/etc/udev/rules.d/10-network.rules
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WAN.network -o /mnt/etc/systemd/network/WAN.network
