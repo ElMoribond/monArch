@@ -27,7 +27,12 @@ pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --log
 #pacstrap /mnt \
   base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
   net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools \
-  dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker
+  dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker \
+
+if [[ $? -ne 0 ]]; then
+  echo "Erreur pacman "
+  exit 1
+fi
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat <<EOT >> /mnt/etc/fstab
