@@ -49,7 +49,7 @@ CheckEx $? mnt3
 #  archlinux-keyring
 #CheckEx $? pacman1
 #pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
-pacstrap base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools \
+pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools \
   archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
   ntfs-3g exfat-utils mosquitto wget htop docker
 CheckEx $? pacstrap
