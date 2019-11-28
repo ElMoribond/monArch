@@ -22,9 +22,9 @@ if [[ $ok -ne 1 ]]; then
   exit 1
 fi
 
-pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log \
-  --gpgdir /mnt/etc/pacman.d/gnupg -S --needed \
-#pacstrap /mnt \
+#pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log \
+#  --gpgdir /mnt/etc/pacman.d/gnupg -S --needed \
+pacstrap /mnt \
   base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
   net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools \
   dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker
