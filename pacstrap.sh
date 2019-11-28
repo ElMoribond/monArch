@@ -14,10 +14,14 @@ if [[ -z ${MON_HOSTN+x} ]]; then
   echo "Variable MON_HOSTN indéfinie !"
   exit 1
 fi
+if [[ -z ${MON_USER+x} ]]; then
+  echo "Variable MON_USER indéfinie !"
+  exit 1
+fi
 
 pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
   net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools \
-  dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto
+  dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat <<EOT >> /mnt/etc/fstab
@@ -77,13 +81,11 @@ export PATH=/srv/scripts/:$PATH
 
 # Custom bash prompt via kirsle.net/wizards/ps1.html
 if [[ $EUID -ne 0 ]]; then
-  PS1=2
+  export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
 else
-  PS1=1
+  export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
 fi
-export PS1="\[$(tput bold)\]\[$(tput setaf $PS1)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
 
-# Ecran d'accueil archey
 /usr/bin/archey3
 EOT
 
@@ -120,7 +122,5 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_
 
 export LANG=fr_FR.UTF-8
 
-echo "---------------------------- Prochaines étapes"
-echo "arch-chroot /mnt"
-echo "export MON_USER=nom_user"
-echo "wget -O - https://tinyurl.com/MonPostinstall01 | bash"
+arch-chroot /mn
+wget -O - https://tinyurl.com/MonPostinstall01 | bash
