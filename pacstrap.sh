@@ -1,7 +1,13 @@
 #!/bin/bash
+# https://tinyurl.com/MonPacstrap01
 
-if [ -z ${SSID_PASSWORD+x} ]; then
-  echo Variable SSID_PASSWORD indéfinie!
+if [ ! -d /mnt/boot/efi || ! -d /mnt/home ]; then
+  echo "Il faut monter les FS !"
+  exit 1
+fi
+
+if [ -z ${SSID_PASSWORD+x} || -z ${MON_HOSTN+x} ]; then
+  echo "Variable MON_HOSTN indéfinie !"
   exit 1
 fi
 
@@ -14,9 +20,7 @@ cat <<EOT >> /mnt/etc/fstab
 tmpfs   /tmp    tmpfs  rw,size=2G,noexec,nodev,nosuid,mode=1700 0 0
 EOT
 
-cat <<EOT >> /mnt/etc/hostname
-tesla
-EOT
+echo $MON_HOSTN > /mnt/etc/hostname
 
 # Clavier
 cat <<EOT >> /mnt/etc/vconsole.conf
@@ -83,29 +87,43 @@ else
 fi
 export PS1="\[$(tput bold)\]\[$(tput setaf $PS1)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
 
-# Ecran d'accueil archey4
+# Ecran d'accueil archey
 /usr/bin/archey3
 EOT
 
+echo "---------------------------- Récupère fichiers réseau"
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -O /mnt/etc/udev/rules.d/10-network.rules
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WAN.network -O /mnt/etc/systemd/network/WAN.network
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/LAN.network -O /mnt/etc/systemd/network/LAN.network
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WIFI.network -O /mnt/etc/systemd/network/WIFI.network
 
+echo "---------------------------- Récupère fichiers configuration dnsmasq"
 mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.ori
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/resolv.conf -O /mnt/etc/resolv.conf
-
 mv /mnt/etc/dnsmasq.conf /mnt/etc/dnsmasq.conf.ori
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/dnsmasq.conf -O /mnt/etc/dnsmasq.conf
 
+echo "---------------------------- Récupère fichiers hostapd"
 mv /mnt/etc/hostapd/hostapd.conf /mnt/etc/hostapd/hostapd.conf.ori
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.conf -O /mnt/etc/hostapd/hostapd.conf
 sed -i "s/wpa_passphrase=/wpa_passphrase=${SSID_PASSWORD}/g" /mnt/etc/hostapd/hostapd.conf
 
+echo "---------------------------- Récupère fichiers firewall"
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -O /mnt/etc/systemd/system/firewall.service
 mkdir -p /mnt/srv/scripts/
 wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall.sh
 chmod +x /mnt/srv/scripts/firewall.sh
 
+echo "---------------------------- Modif config ssh"
 sed -i "s/Port 22/Port 53306/g" /mnt/etc/ssh/sshd_config
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh/sshd_config
+
+echo "---------------------------- Installation de grub"
+mount | grep efivars &> /dev/null || mount -t efivarfs efivarfs/sys/firmware/efi/efivars
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
+
+export LANG=fr_FR.UTF-8
+
+echo "---------------------------- Prochaines étapes"
+echo "arch-chroot /mnt"
+echo "wget -O - https://tinyurl.com/MonPostinstall01 | bash"
