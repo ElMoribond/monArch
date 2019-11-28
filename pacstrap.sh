@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z ${SSID_PASSWORD+x} ]; then
-  Variable SSID_PASSWORD indéfinie!
+  echo Variable SSID_PASSWORD indéfinie!
   exit 1
 fi
 
