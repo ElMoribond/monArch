@@ -44,6 +44,7 @@ CheckEx $? mnt3
 mkdir -p /mnt/var/lib/pacman /mnt/var/cache/pacman/pkg /mnt/var/log /mnt/etc/pacman.d/gnupg
 CheckEx $? mkdir
 pacman-key --init --gpgdir /mnt/etc/pacman.d/gnupg
+CheckEx $? pacman-key
 pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
   archlinux-keyring
 CheckEx $? pacman1
