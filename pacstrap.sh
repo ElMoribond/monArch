@@ -22,23 +22,34 @@ if [[ $ok -ne 1 ]]; then
   exit 1
 fi
 
+function CheckEx() {
+  if [[ $1 -ne 0 ]]; then
+    echo "Erreur sur dernière commande -> $2"
+    exit 1
+  fi
+}
+
 umount -R /mnt
 mkfs.ext4 -F /dev/nvme0n1p2
+CheckEx $? mkfs
 mount /dev/nvme0n1p2 /mnt
+CheckEx $? mnt
 mkdir -p /mnt/boot/efi /mnt/home
+CheckEx $? mnt1
 mount /dev/nvme0n1p1 /mnt/boot/efi
+CheckEx $? mnt2
 mount /dev/nvme0n1p5 /mnt/home
+CheckEx $? mnt3
 
 mkdir -p /mnt/var/lib/pacman /mnt/var/cache/pacman/pkg /mnt/var/log /mnt/etc/pacman.d/gnupg
-pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log \
-  --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm base base-devel linux linux-firmware intel-ucode openssh \
+CheckEx $? mkdir
+pacparam=-r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm
+pacman $pacparam archlinux-keyring
+CheckEx $? pacman1
+pacman $pacparam base base-devel linux linux-firmware intel-ucode openssh \
   dnsmasq usbutils bash-completion mc p7zip unzip net-tools archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib \
   hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools ntfs-3g exfat-utils mosquitto wget htop docker
-
-#pacstrap /mnt \
-#  base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip \
-#  net-tools archey3 vnstat hostapd grub os-prober efibootmgr hostapd pacman-contrib alsa-utils syslog-ng mtools \
-#  dosfstools ntfs-3g exfat-utils pacman-contrib mosquitto wget htop docker \
+CheckEx $? pacman2
 
 if [[ $? -ne 0 ]]; then
   echo "Erreur pacman "
