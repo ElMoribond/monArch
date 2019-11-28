@@ -82,23 +82,23 @@ fi
 EOT
 rm /mnt/root/.bash.bashrc
 
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/10-network.rules -o /mnt/etc/udev/rules.d/10-network.rules
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/WAN.network -o /mnt/etc/systemd/network/WAN.network
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/LAN.network -o /mnt/etc/systemd/network/LAN.network
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/WIFI.network -o /mnt/etc/systemd/network/WIFI.network
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -o /mnt/etc/udev/rules.d/10-network.rules
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WAN.network -o /mnt/etc/systemd/network/WAN.network
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/LAN.network -o /mnt/etc/systemd/network/LAN.network
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WIFI.network -o /mnt/etc/systemd/network/WIFI.network
 
 mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.ori
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/resolv.conf -o /mnt/etc/resolv.conf
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/resolv.conf -o /mnt/etc/resolv.conf
 
 mv /mnt/etc/dnsmasq.conf /mnt/etc/dnsmasq.conf.ori
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/dnsmasq.conf -o /mnt/etc/dnsmasq.conf
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/dnsmasq.conf -o /mnt/etc/dnsmasq.conf
 
 mv /mnt/etc/hostapd/hostapd.conf /mnt/etc/hostapd/hostapd.conf.ori
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/hostapd.conf -o /mnt/etc/hostapd/hostapd.conf
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.conf -o /mnt/etc/hostapd/hostapd.conf
 
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/firewall.service -o /mnt/etc/systemd/system/firewall.service
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -o /mnt/etc/systemd/system/firewall.service
 mkdir -p /mnt/srv/scripts/
-wget https://github.com/ElMoribond/monArch/blob/master/conf_files/firewall.sh -o /mnt/srv/scripts/firewall.sh
+wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -o /mnt/srv/scripts/firewall.sh
 chmod +x /mnt/srv/scripts/firewall.sh
 
 sed -i "s/Port 22/Port 53306/g" /mnt/etc/ssh/sshd_config
