@@ -6,7 +6,7 @@ if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
   exit 1
 fi
 
-if [ -z ${SSID_PASSWORD+x} || -z ${MON_HOSTN+x} ]; then
+if [[ -z ${SSID_PASSWORD+x} || -z ${MON_HOSTN+x} ]]; then
   echo "Variable MON_HOSTN indéfinie !"
   exit 1
 fi
