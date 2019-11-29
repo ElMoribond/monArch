@@ -43,7 +43,7 @@ EOT
 
 pacman -S xorg-xinit xorg-xrandr xf86-video-intel plasma-desktop plasma-wayland-session sddm sddm-kcm \
   pulseaudio-zeroconf pulseaudio-jack pulseaudio-equalizer pulseaudio-alsa jack2 notepadqq \
-  alsa-utils alsa-firmware libcanberra libcanberra-pulse mosquitto man-db man-pages \
+  alsa-utils alsa-firmware libcanberra libcanberra-pulse mosquitto man-db man-pages dolphin \
   python-gobject python-pip python-setuptools numlockx vlc libva-intel-driver mpg123 ttf-dejavu
 
 echo "Penser à copier /srv/mp3/sf-chouette-hulotte-double.ogg /usr/share/sounds/freedesktop/stereo/system-bootup.oga"
