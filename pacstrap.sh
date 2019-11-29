@@ -14,10 +14,7 @@ if [[ -z ${MON_HOSTN+x} ]]; then
   echo "Variable MON_HOSTN indéfinie !"
   ok=0
 fi
-if [[ -z ${MON_USER+x} ]]; then
-  echo "Variable MON_USER indéfinie !"
-  ok=0
-fi
+
 if [[ $ok -ne 1 ]]; then
   exit 1
 fi
