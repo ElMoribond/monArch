@@ -134,7 +134,7 @@ echo "---------------------------- Récupère fichiers firewall"
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -O /mnt/etc/systemd/system/firewall.service
 mkdir -p /mnt/srv/scripts/
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall
-chmod +x /mnt/srv/scripts/firewall.sh
+chmod +x /mnt/srv/scripts/firewall
 
 echo "---------------------------- Modif config ssh"
 sed -i "s/#Port 22/Port 53306/g" /mnt/etc/ssh/sshd_config
