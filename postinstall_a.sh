@@ -5,6 +5,9 @@ if [[ -z ${MON_USER+x} ]]; then
   exit 1
 fi
 
+timedatectl set-ntp true
+echo Europe/Paris > /etc/timezone
+
 systemctl enable systemd-networkd.service dnsmasq.service sshd.service hostapd.service
 
 echo
