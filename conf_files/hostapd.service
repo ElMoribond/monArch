@@ -1,0 +1,13 @@
+[Unit]
+Description=Hotspot Wifi
+BindsTo=sys-subsystem-net-devices-WIFI.device
+After=network.target sys-subsystem-net-devices-WIFI.device
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/hostapd /etc/hostapd/hostapd.conf
+ExecReload=/bin/kill -HUP $MAINPID
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
