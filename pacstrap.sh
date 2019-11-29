@@ -108,15 +108,9 @@ export LESS="-r"
 export EDITOR=nano
 export PATH=/srv/scripts/:$PATH
 
-# Custom bash prompt via kirsle.net/wizards/ps1.html
-if [[ $EUID -ne 0 ]]; then
-  export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
-else
-  export PS1="\[$(tput bold)\]\[$(tput setaf 1)\]\u\[$(tput setaf 4)\]@\h \w\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
-fi
-
-/usr/bin/archey3
 EOT
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/bashrc -O bashrc
+cat bashrc >> /mnt/etc/bash.bashrc
 
 echo "---------------------------- Récupère fichiers réseau"
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -O /mnt/etc/udev/rules.d/10-network.rules
