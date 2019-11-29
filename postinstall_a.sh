@@ -55,8 +55,9 @@ systemctl enable canberra-system-bootup.service
 
 mkdir /home/${MON_USER}/src
 cd /home/${MON_USER}/src
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/xorgxrdp-git.tar.gz -O ./xorgxrdp-git.tar.gz
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/xrdp.tar.gz -O ./xrdp.tar.gz
+wget -q https://aur.archlinux.org/cgit/aur.git/snapshot/xorgxrdp-git.tar.gz -O ./xorgxrdp-git.tar.gz
+wget -q https://aur.archlinux.org/cgit/aur.git/snapshot/xrdp.tar.gz -O ./xrdp.tar.gz
+wget -q https://aur.archlinux.org/cgit/aur.git/snapshot/ctop.tar.gz -O ./ctop.tar.gz
 
 touch /modprobe.d/alsa-base.conf
 cat <<EOT >> /modprobe.d/alsa-base.conf
