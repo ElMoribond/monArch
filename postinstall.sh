@@ -29,3 +29,12 @@ echo "Prochain script https://tinyurl.com/MonPostinstall02"
 echo
 echo "Activer services, au minimum:  systemd-networkd, dnsmasq et sshd"
 echo "Vérifier avec networkctl et systemctl"
+
+cd /root
+rm -f $0
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/postinstall_a.sh -O ./Postinstall.sh
+chmod +x ./Postinstall.sh
+
+echo "A (re)exécuter après reboot"
+echo
+echo "./Postinstall.sh"
