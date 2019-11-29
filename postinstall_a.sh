@@ -7,15 +7,10 @@ fi
 
 systemctl enable systemd-networkd.service dnsmasq.service sshd.service hostapd.service
 
-if [[ -r /srv/vnstat/vnstat.db ]]; then
-  systemctl enable vnstat.service
-else
-  echo
-  echo "--------------->>>>>  Penser à copier les données vnstat"
-  echo
-fi
+echo
+echo "--------------->>>>>  Penser à copier les données vnstat"
+echo
 sed -i 's/Interface ""/Interface "WAN LAN WIFI"/g' /etc/vnstat.conf
-sed -i 's/DatabaseDir \"\/var\/lib\/vnstat\"/DatabaseDir \"\/srv\/vnstat\"/g' /etc/vnstat.conf
 sed -i 's/ExecStart=\/usr\/sbin\/vnstatd/ExecStart=\/usr\/bin\/vnstatd/g' /usr/lib/systemd/system/vnstat.service
 
 echo "---------------------------- Création utilisateur"
@@ -30,4 +25,6 @@ ${MON_USER} ALL=(ALL) NOPASSWD: ALL
 EOT
 rm -f /home/${MON_USER}/.bash.bashrc
 
-pacman -Syu docker mosquitto 
+#pacman -Syu docker mosquitto man-db man-pages
+#pacman -S plasma-wayland-session sddm sddm-kcm 
+#plasma-desktop
