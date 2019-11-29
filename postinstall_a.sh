@@ -18,13 +18,47 @@ useradd -m ${MON_USER}
 usermod -aG users,video,audio ${MON_USER}
 cat <<EOT >> /etc/sudoers
 
-userdel ftp
-rm -rf /srv/ftp
-
 ${MON_USER} ALL=(ALL) NOPASSWD: ALL
 EOT
+userdel ftp
+rm -rf /srv/ftp
 rm -f /home/${MON_USER}/.bashrc
+echo "exec startplasma-x11" > /home/${MON_USER}/.xinitrc
 
-#pacman -Syu docker mosquitto man-db man-pages
-#pacman -S plasma-wayland-session sddm sddm-kcm 
-#plasma-desktop
+echo allowed_users=anybody > /etc/X11/Xwrapper.config
+
+cat <<EOT >> /etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+    Identifier         "Keyboard Layout"
+    MatchIsKeyboard    "yes"
+    Option             "XkbLayout"  "fr"
+    Option             "XkbVariant" "latin9" # accès aux caractères spéciaux plus logique avec "Alt Gr" (ex : « » avec "Alt Gr" w x)
+EndSection
+EOT
+
+cat <<EOT >> /usr/share/sddm/scripts/Xsetup
+setxkbmap fr
+numlockx
+EOT
+
+pacman -S xorg-xinit xorg-xrandr xf86-video-intel plasma-desktop plasma-wayland-session sddm sddm-kcm \
+  pulseaudio-zeroconf pulseaudio-jack pulseaudio-equalizer pulseaudio-alsa jack2 notepadqq \
+  alsa-utils alsa-firmware libcanberra libcanberra-pulse mosquitto man-db man-pages \
+  python-gobject python-pip python-setuptools numlockx vlc libva-intel-driver mpg123 ttf-dejavu
+
+echo "Penser à copier /srv/mp3/sf-chouette-hulotte-double.ogg /usr/share/sounds/freedesktop/stereo/system-bootup.oga"
+
+systemctl enable canberra-system-bootup.service
+
+mkdir /home/${MON_USER}/src
+cd /home/${MON_USER}/src
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/xorgxrdp-git.tar.gz -O ./xorgxrdp-git.tar.gz
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/xrdp.tar.gz -O ./xrdp.tar.gz
+
+touch /modprobe.d/alsa-base.conf
+cat <<EOT >> /modprobe.d/alsa-base.conf
+options snd_hda_intel index=0
+options snd_usb_intel index=1
+EOT
+
+
