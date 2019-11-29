@@ -28,9 +28,6 @@ function CheckEx() {
     exit 1
   fi
 }
-function pause() {
-   read -p 'Presser [Enter] pour continuer...'
-}
 
 umount -R /mnt
 mkfs.ext4 -F /dev/nvme0n1p2
@@ -52,16 +49,10 @@ CheckEx $? mnt3
 #  archlinux-keyring
 #CheckEx $? pacman1
 #pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
-pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools \
-  archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
-  ntfs-3g exfat-utils mosquitto wget -q htop docker
+pacstrap /mnt base base-devel linux linux-firmware openssh dnsmasq bash-completion mc p7zip unzip net-tools grub os-prober efibootmgr \
+  archey3 vnstat hostapd pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
+  ntfs-3g exfat-utils mosquitto wget -q htop docker intel-ucode usbutils 
 CheckEx $? pacstrap
-pause
-
-if [[ $? -ne 0 ]]; then
-  echo "Erreur pacman "
-  exit 1
-fi
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 cat <<EOT >> /mnt/etc/fstab
@@ -71,7 +62,6 @@ EOT
 
 echo $MON_HOSTN > /mnt/etc/hostname
 cat /mnt/etc/fstab
-pause
 
 # Clavier
 cat <<EOT >> /mnt/etc/vconsole.conf
@@ -157,10 +147,6 @@ chmod +x /mnt/srv/scripts/firewall.sh
 echo "---------------------------- Modif config ssh"
 sed -i "s/Port 22/Port 53306/g" /mnt/etc/ssh/sshd_config
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh/sshd_config
-
-echo "---------------------------- Installation de grub"
-mount | grep efivars &> /dev/null || mount -t efivarfs efivarfs/sys/firmware/efi/efivars
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
 
 export LANG=fr_FR.UTF-8
 
