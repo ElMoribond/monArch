@@ -3,7 +3,7 @@ Name=WIFI
 
 [Network]
 DHCP=no
-Domain=loiseliere.lan
+#Domain=loiseliere.lan
 Address=172.16.0.1/24
 
 DNS=127.0.0.1
