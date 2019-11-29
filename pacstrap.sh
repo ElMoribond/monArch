@@ -50,8 +50,8 @@ CheckEx $? mnt3
 #CheckEx $? pacman1
 #pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
 pacstrap /mnt base base-devel linux linux-firmware openssh dnsmasq bash-completion mc p7zip unzip net-tools grub os-prober efibootmgr \
-  archey3 vnstat hostapd pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
-  ntfs-3g exfat-utils mosquitto wget -q htop docker intel-ucode usbutils 
+  archey3 vnstat hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
+  ntfs-3g exfat-utils wget htop intel-ucode usbutils nano
 CheckEx $? pacstrap
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
@@ -150,5 +150,6 @@ sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh
 
 export LANG=fr_FR.UTF-8
 
-#arch-chroot /mn
-#wget -O - https://tinyurl.com/MonPostinstall01 | bash
+echo "---------------------------- Prochaine étapes"
+echo "arch-chroot /mn"
+echo "wget -O - https://tinyurl.com/MonPostinstall01 | bash"
