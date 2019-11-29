@@ -6,6 +6,8 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_
 sed -i '/GRUB_TIMEOUT/c\GRUB_TIMEOUT=1' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
+mkinitcpio -p linux
+
 echo "---------------------------- Configuration langue"
 cat <<EOT >> /etc/locale.conf
 LANG=fr_FR.UTF-8
