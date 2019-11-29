@@ -20,7 +20,7 @@ sed -i "s/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g" /etc/locale.gen
 locale-gen
 
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
-sed -i "s/DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g" /etc/systemd/system.conf 
+sed -i "s/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g" /etc/systemd/system.conf 
 rm -f /root/.bash.bashrc
 
 echo
