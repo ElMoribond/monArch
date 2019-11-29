@@ -23,7 +23,7 @@ rm -rf /srv/ftp
 
 ${MON_USER} ALL=(ALL) NOPASSWD: ALL
 EOT
-rm -f /home/${MON_USER}/.bash.bashrc
+rm -f /home/${MON_USER}/.bashrc
 
 #pacman -Syu docker mosquitto man-db man-pages
 #pacman -S plasma-wayland-session sddm sddm-kcm 
