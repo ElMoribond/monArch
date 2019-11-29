@@ -147,9 +147,11 @@ chmod +x /mnt/srv/scripts/firewall.sh
 echo "---------------------------- Modif config ssh"
 sed -i "s/#Port 22/Port 53306/g" /mnt/etc/ssh/sshd_config
 sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh/sshd_config
+chmod +x /mnt/root/Postinstall.sh
 
 export LANG=fr_FR.UTF-8
 
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/postinstall.sh -O /mnt/root/Postinstall.sh
 echo "---------------------------- Prochaine étapes"
 echo "arch-chroot /mn"
-echo "wget -O - https://tinyurl.com/MonPostinstall01 | bash"
+echo "/root/Postinstall.sh"
