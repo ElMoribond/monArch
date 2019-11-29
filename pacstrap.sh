@@ -28,6 +28,9 @@ function CheckEx() {
     exit 1
   fi
 }
+function pause() {
+   read -p 'Presser [Enter] pour continuer...'
+}
 
 umount -R /mnt
 mkfs.ext4 -F /dev/nvme0n1p2
@@ -53,6 +56,7 @@ pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq u
   archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
   ntfs-3g exfat-utils mosquitto wget htop docker
 CheckEx $? pacstrap
+pause
 
 if [[ $? -ne 0 ]]; then
   echo "Erreur pacman "
@@ -66,6 +70,8 @@ tmpfs   /tmp    tmpfs  rw,size=2G,noexec,nodev,nosuid,mode=1700 0 0
 EOT
 
 echo $MON_HOSTN > /mnt/etc/hostname
+cat /mnt/etc/fstab
+pause
 
 # Clavier
 cat <<EOT >> /mnt/etc/vconsole.conf
@@ -155,7 +161,7 @@ sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh
 echo "---------------------------- Installation de grub"
 mount | grep efivars &> /dev/null || mount -t efivarfs efivarfs/sys/firmware/efi/efivars
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
-
+pause
 export LANG=fr_FR.UTF-8
 
 arch-chroot /mn
