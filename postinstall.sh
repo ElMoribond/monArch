@@ -1,10 +1,15 @@
 #!/bin/bash
 
+function pause() {
+   read -p 'Presser [Enter] pour continuer...'
+}
+
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
 echo "---------------------------- Configuration de grub"
 sed -i '/GRUB_TIMEOUT/c\GRUB_TIMEOUT=1' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
+pause
 
 echo "---------------------------- Configuration langue"
 cat <<EOT >> /etc/locale.conf
@@ -16,6 +21,7 @@ EOT
 sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
 sed -i "s/#fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g" /etc/locale.gen
 locale-gen
+pause
 
 sed -i "s/DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g" /etc/systemd/system.conf 
 
