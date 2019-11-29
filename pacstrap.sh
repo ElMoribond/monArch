@@ -127,6 +127,7 @@ wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/d
 echo "---------------------------- Récupère fichiers hostapd"
 mv /mnt/etc/hostapd/hostapd.conf /mnt/etc/hostapd/hostapd.conf.ori
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.conf -O /mnt/etc/hostapd/hostapd.conf
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.service -O /mnt/etc/systemd/system/hostapd.service
 sed -i "s/wpa_passphrase=/wpa_passphrase=${SSID_PASSWORD}/g" /mnt/etc/hostapd/hostapd.conf
 
 echo "---------------------------- Récupère fichiers firewall"
