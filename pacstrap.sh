@@ -132,7 +132,7 @@ sed -i "s/wpa_passphrase=/wpa_passphrase=${SSID_PASSWORD}/g" /mnt/etc/hostapd/ho
 echo "---------------------------- Récupère fichiers firewall"
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -O /mnt/etc/systemd/system/firewall.service
 mkdir -p /mnt/srv/scripts/
-wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall.sh
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall
 chmod +x /mnt/srv/scripts/firewall.sh
 
 echo "---------------------------- Modif config ssh"
