@@ -19,6 +19,7 @@ echo "---------------------------- Création utilisateur"
 useradd -m ${MON_USER}
 usermod -aG users,video,audio ${MON_USER}
 cat <<EOT >> /etc/sudoers
+
 ${MON_USER} ALL=(ALL) NOPASSWD: ALL
 EOT
 rm -f /home/${MON_USER}/.bash.bashrc
