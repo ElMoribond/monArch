@@ -54,7 +54,7 @@ CheckEx $? mnt3
 #pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
 pacstrap /mnt base base-devel linux linux-firmware intel-ucode openssh dnsmasq usbutils bash-completion mc p7zip unzip net-tools \
   archey3 vnstat hostapd grub os-prober efibootmgr pacman-contrib hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
-  ntfs-3g exfat-utils mosquitto wget htop docker
+  ntfs-3g exfat-utils mosquitto wget -q htop docker
 CheckEx $? pacstrap
 pause
 
@@ -132,26 +132,26 @@ fi
 EOT
 
 echo "---------------------------- Récupère fichiers réseau"
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -O /mnt/etc/udev/rules.d/10-network.rules
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WAN.network -O /mnt/etc/systemd/network/WAN.network
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/LAN.network -O /mnt/etc/systemd/network/LAN.network
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WIFI.network -O /mnt/etc/systemd/network/WIFI.network
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/10-network.rules -O /mnt/etc/udev/rules.d/10-network.rules
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WAN.network -O /mnt/etc/systemd/network/WAN.network
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/LAN.network -O /mnt/etc/systemd/network/LAN.network
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/WIFI.network -O /mnt/etc/systemd/network/WIFI.network
 
 echo "---------------------------- Récupère fichiers configuration dnsmasq"
 mv /mnt/etc/resolv.conf /mnt/etc/resolv.conf.ori
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/resolv.conf -O /mnt/etc/resolv.conf
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/resolv.conf -O /mnt/etc/resolv.conf
 mv /mnt/etc/dnsmasq.conf /mnt/etc/dnsmasq.conf.ori
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/dnsmasq.conf -O /mnt/etc/dnsmasq.conf
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/dnsmasq.conf -O /mnt/etc/dnsmasq.conf
 
 echo "---------------------------- Récupère fichiers hostapd"
 mv /mnt/etc/hostapd/hostapd.conf /mnt/etc/hostapd/hostapd.conf.ori
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.conf -O /mnt/etc/hostapd/hostapd.conf
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/hostapd.conf -O /mnt/etc/hostapd/hostapd.conf
 sed -i "s/wpa_passphrase=/wpa_passphrase=${SSID_PASSWORD}/g" /mnt/etc/hostapd/hostapd.conf
 
 echo "---------------------------- Récupère fichiers firewall"
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -O /mnt/etc/systemd/system/firewall.service
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.service -O /mnt/etc/systemd/system/firewall.service
 mkdir -p /mnt/srv/scripts/
-wget https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall.sh
+wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/conf_files/firewall.sh -O /mnt/srv/scripts/firewall.sh
 chmod +x /mnt/srv/scripts/firewall.sh
 
 echo "---------------------------- Modif config ssh"
@@ -161,8 +161,8 @@ sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /mnt/etc/ssh
 echo "---------------------------- Installation de grub"
 mount | grep efivars &> /dev/null || mount -t efivarfs efivarfs/sys/firmware/efi/efivars
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
-pause
+
 export LANG=fr_FR.UTF-8
 
-arch-chroot /mn
-wget -O - https://tinyurl.com/MonPostinstall01 | bash
+#arch-chroot /mn
+#wget -O - https://tinyurl.com/MonPostinstall01 | bash
