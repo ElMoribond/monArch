@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pacman -S docker
+pacman -S docker docker-compose
 
 mkdir /etc/docker
 cat <<EOF >> /etc/docker/daemon.json
