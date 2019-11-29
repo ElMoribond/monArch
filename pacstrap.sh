@@ -2,10 +2,10 @@
 # https://tinyurl.com/MonPacstrap01
 
 ok=1
-if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
-  echo "Il faut monter les FS !"
-  ok=0
-fi
+#if [[ ! -d /mnt/boot/efi || ! -d /mnt/home ]]; then
+#  echo "Il faut monter les FS !"
+#  ok=0
+#fi
 if [[ -z ${SSID_PASSWORD+x} ]]; then
   echo "Variable SSID_PASSWORD indéfinie !"
   ok=0
