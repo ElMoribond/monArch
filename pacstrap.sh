@@ -48,7 +48,7 @@ CheckEx $? mnt3
 #pacman -r /mnt -b /mnt/var/lib/pacman --cachedir /mnt/var/cache/pacman/pkg --logfile /mnt/var/log/pacman.log --gpgdir /mnt/etc/pacman.d/gnupg -Syu --needed --noconfirm \
 pacstrap /mnt base base-devel linux linux-firmware openssh dnsmasq bash-completion mc p7zip unzip net-tools grub os-prober efibootmgr \
   archey3 vnstat hostapd pacman-contrib alsa-utils syslog-ng mtools dosfstools \
-  ntfs-3g exfat-utils wget htop intel-ucode usbutils nano
+  ntfs-3g exfat-utils wget htop intel-ucode usbutils nano git
 CheckEx $? pacstrap
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
