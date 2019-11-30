@@ -33,6 +33,13 @@ echo
 echo "Activer services, au minimum:  systemd-networkd, dnsmasq et sshd"
 echo "Vérifier avec networkctl et systemctl"
 
+cat <<EOF >> /etc/hosts
+127.0.0.1  localhost.localdomain localhost
+
+10.0.0.1   tesla.loiseliere.lan mqtt.loiseliere.lan tesla mqtt
+10.0.0.2   mazda.loiseliere.lan mazda
+EOF
+
 cd /root
 rm -f $0
 wget -q https://raw.githubusercontent.com/ElMoribond/monArch/master/postinstall_a.sh -O ./Postinstall.sh
