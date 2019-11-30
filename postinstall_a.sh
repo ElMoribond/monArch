@@ -65,4 +65,18 @@ options snd_hda_intel index=0
 options snd_usb_intel index=1
 EOT
 
+pacman -S apache php php-apache 
+sed -i 's/#extension=mysqli.so/extension=mysqli.so/g' /etc/php/php.ini
+sed -i 's/#extension=pdo_mysql.so/extension=pdo_mysql.so/g' /etc/php/php.ini
+sed -i 's/LoadModule mpm_event_module modules\/mod_mpm_event.so/#LoadModule mpm_event_module modules\/mod_mpm_event.so/g' /etc/httpd/conf/httpd.conf
+sed -i 's/#LoadModule mpm_prefork_module modules\/mod_mpm_prefork.so/LoadModule mpm_prefork_module modules\/mod_mpm_prefork.so/g' /etc/httpd/conf/httpd.conf
+cat <<EOF >> /etc/httpd/conf/httpd.conf
 
+# Load php7 module
+LoadModule php7_module modules/libphp7.so
+
+# PHP settings
+Include conf/extra/php7_module.conf
+EOF
+systemctl enable httpd
+systemctl start httpd
