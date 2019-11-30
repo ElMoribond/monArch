@@ -1,6 +1,6 @@
 
 
-pacman -Rsn discover
+pacman -Rsn discover modemmanager-qt plasma-nm
 
 # Suppression des jeux (paquet fltk indispensable à tigervnc qui est nécessaire à xrdp)
 # et raccourcis FLUID
