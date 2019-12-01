@@ -120,3 +120,6 @@ for i in `/usr/bin/seq 1 6`; do
   && /usr/bin/wget "https://github.com/numediart/MBROLA-voices/blob/master/data/fr$i/fr$i?raw=true" -O "/usr/share/mbrola/fr$i/fr$i"
 done
 
+pacman -S tzdata
+timedatectl set-timezone Europe/Paris
+timedatectl set-ntp true
