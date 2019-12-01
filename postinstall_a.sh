@@ -51,6 +51,12 @@ pacman -S xorg-xinit xorg-xrandr xf86-video-intel plasma-desktop plasma-wayland-
 
 echo "Penser à copier /srv/mp3/sf-chouette-hulotte-double.ogg /usr/share/sounds/freedesktop/stereo/system-bootup.oga"
 
+cat <<EOT >> /etc/pulse/client.conf
+
+auto-connect-localhost = yes
+#default-server = unix:/tmp/pulse-socket
+EOT
+
 systemctl enable canberra-system-bootup.service
 
 mkdir /home/${MON_USER}/src
@@ -106,3 +112,11 @@ cat <<EOF >> /etc/webapps/phpmyadmin/config.inc.php
 \$cfg['DefaultLang'] = 'fr';
 \$cfg['TempDir'] ='/tmp';
 EOF
+
+pip install gTTS
+pacman -S espeak-ng mplayer 
+for i in `/usr/bin/seq 1 6`; do
+  /bin/mkdir -p "/usr/share/mbrola/fr$i" \
+  && /usr/bin/wget "https://github.com/numediart/MBROLA-voices/blob/master/data/fr$i/fr$i?raw=true" -O "/usr/share/mbrola/fr$i/fr$i"
+done
+
