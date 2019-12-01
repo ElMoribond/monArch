@@ -80,3 +80,21 @@ Include conf/extra/php7_module.conf
 EOF
 systemctl enable httpd
 systemctl start httpd
+
+cat <<EOF >> /etc/httpd/conf/extra/httpd-phpmyadmin.conf
+Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
+<Directory "/usr/share/webapps/phpMyAdmin">
+    DirectoryIndex index.html index.php
+    AllowOverride All
+    Options FollowSymlinks
+    Require all granted
+</Directory>
+EOF
+
+cat <<EOF >> /etc/httpd/conf/httpd.conf
+
+# phpMyAdmin configuration
+Include conf/extra/httpd-phpmyadmin.conf
+EOF
+sed -i 's/#extension=mcrypt.so/extension=mcrypt.so/g' /etc/php/php.ini
+
