@@ -66,8 +66,8 @@ options snd_usb_intel index=1
 EOT
 
 pacman -S apache php php-apache 
-sed -i 's/#extension=mysqli.so/extension=mysqli.so/g' /etc/php/php.ini
-sed -i 's/#extension=pdo_mysql.so/extension=pdo_mysql.so/g' /etc/php/php.ini
+sed -i 's/;extension=mysqli/extension=mysqli/g' /etc/php/php.ini
+sed -i 's/;extension=pdo_mysql/extension=pdo_mysql/g' /etc/php/php.ini
 sed -i 's/LoadModule mpm_event_module modules\/mod_mpm_event.so/#LoadModule mpm_event_module modules\/mod_mpm_event.so/g' /etc/httpd/conf/httpd.conf
 sed -i 's/#LoadModule mpm_prefork_module modules\/mod_mpm_prefork.so/LoadModule mpm_prefork_module modules\/mod_mpm_prefork.so/g' /etc/httpd/conf/httpd.conf
 cat <<EOF >> /etc/httpd/conf/httpd.conf
@@ -96,5 +96,13 @@ cat <<EOF >> /etc/httpd/conf/httpd.conf
 # phpMyAdmin configuration
 Include conf/extra/httpd-phpmyadmin.conf
 EOF
-sed -i 's/#extension=mcrypt.so/extension=mcrypt.so/g' /etc/php/php.ini
+sed -i "s/'localhost';/'127.0.0.1';/g" /etc/webapps/phpmyadmin/config.inc.php
 
+randomBlowfishSecret=`openssl rand -base64 32`;
+sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$randomBlowfishSecret'/g" /etc/webapps/phpmyadmin/config.inc.php
+sed -i "s|//$cfg['DefaultLang'] = 'en';|//$cfg['DefaultLang'] = 'fr';|g" /etc/webapps/phpmyadmin/config.inc.php
+cat <<EOF >> /etc/webapps/phpmyadmin/config.inc.php
+
+\$cfg['DefaultLang'] = 'fr';
+\$cfg['TempDir'] ='/tmp';
+EOF
