@@ -123,3 +123,5 @@ done
 pacman -S tzdata
 timedatectl set-timezone Europe/Paris
 timedatectl set-ntp true
+
+pacman -S paprefs
