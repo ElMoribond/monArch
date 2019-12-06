@@ -18,3 +18,4 @@ rm -f /usr/share/man/man6/blocks.6.gz
 rm -f /usr/share/man/man6/checkers.6.gz
 rm -f /usr/share/man/man6/sudoku.6.gz
 
+pacman -Rsn networkmanager wpa_supplicant networkmanager-qt plasma-vault powerdevil
