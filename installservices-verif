@@ -1,0 +1,78 @@
+#!/bin/bash
+
+cat <<'EOF' > /etc/systemd/system/verif-quotidienne.timer
+[Unit]
+Description=Vérification Quotidienne (à 1h23)
+
+[Timer]
+OnCalendar=*-*-* 01:23:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+
+cat <<'EOF' > /etc/systemd/system/verif-hebdomadaire.timer
+[Unit]
+Description=Vérification Hebdomadaire (le mardi à 2h34)
+
+[Timer]
+OnCalendar=Tue *-*-* 02:34:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+
+cat <<'EOF' > /etc/systemd/system/verif-mensuelle.timer
+[Unit]
+Description=Vérification Mensuelle (le 1er samedi à 3h45)
+
+[Timer]
+OnCalendar=Sat *-1..12-* 03:45:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+#---------------------------------------------------------
+cat <<'EOF' > /etc/systemd/system/verif-quotidienne.service
+[Unit]
+Description=Vérification Quotidienne (à 1h23)
+Wants=verif-quotidienne.timer
+
+[Service]
+Type=oneshot
+ExecStart=/srv/scripts/automated/verif-quotidienne.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat <<'EOF' > /etc/systemd/system/verif-hebdomadaire.service
+[Unit]
+Description=Vérification Hebdomadaire (le mardi à 2h34)
+Wants=verif-hebdomadaire.timer
+
+[Service]
+Type=oneshot
+ExecStart=/srv/scripts/automated/verif-hebdomadaire.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat <<'EOF' > /etc/systemd/system/verif-mensuelle.service
+[Unit]
+Description=Vérification Mensuelle (le 1er samedi à 3h45)
+Wants=verif-mensuelle.timer
+
+[Service]
+Type=oneshot
+ExecStart=/srv/scripts/automated/verif-mensuelle.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable verif-quotidienne.timer verif-hebdomadaire.timer verif-mensuelle.timer
+systemctl start verif-quotidienne.timer verif-hebdomadaire.timer verif-mensuelle.timer
