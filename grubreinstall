@@ -1,6 +1,12 @@
 #!/bin/bash
 # https://tinyurl.com/trb5op5
 
+# cd /var/cache/pacman/pkg/
+# pacman -U systemd-245.7-1-x86_64.pkg.tar.zst systemd-libs-245.7-1-x86_64.pkg.tar.zst systemd-sysvcompat-245.7-1-x86_64.pkg.tar.zst
+# pacman -U linux-5.6.8.arch1-1-x86_64.pkg.tar.zst linux-headers-5.6.8.arch1-1-x86_64.pkg.tar.zst
 # mkinitcpio -p linux
+
 grub-mkconfig -o /boot/grub/grub.cfg
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+
+# Certain du nom de l'entrée ?
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
